@@ -1,0 +1,101 @@
+/* ============================================================
+   index.css — Global styles
+   Tailwind base + small custom utilities
+   ============================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes hero-name-in {
+  from { opacity: 0; transform: translateY(0.18em); filter: blur(5px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes hero-portrait-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes hero-halo-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.hero-name-swap { display: inline-block; animation: hero-name-in 500ms ease both; }
+.hero-typing { display: inline-block; min-height: 1.2em; }
+.hero-typing::after {
+  content: "";
+  display: inline-block;
+  height: 0.9em;
+  margin-left: 0.08em;
+  border-right: 2px solid #93c5fd;
+  vertical-align: -0.08em;
+  animation: hero-caret 800ms steps(2, start) infinite;
+}
+.hero-portrait { animation: hero-portrait-float 5s ease-in-out infinite; }
+.hero-photo-halo, .hero-photo-glow { animation: hero-halo-pulse 4s ease-in-out infinite; }
+
+.scroll-reveal section > *,
+.scroll-reveal section .grid > * {
+  transition: opacity 650ms ease, transform 650ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+.scroll-reveal:not(.is-visible) section > *,
+.scroll-reveal:not(.is-visible) section .grid > * {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.scroll-reveal.is-visible section > *:nth-child(2) { transition-delay: 90ms; }
+.scroll-reveal.is-visible section > *:nth-child(3) { transition-delay: 160ms; }
+.scroll-reveal.is-visible section .grid > *:nth-child(2) { transition-delay: 80ms; }
+.scroll-reveal.is-visible section .grid > *:nth-child(3) { transition-delay: 150ms; }
+.scroll-reveal.is-visible section .grid > *:nth-child(4) { transition-delay: 220ms; }
+.scroll-reveal.is-visible section .grid > *:nth-child(5) { transition-delay: 290ms; }
+.scroll-reveal.is-visible section .grid > *:nth-child(6) { transition-delay: 360ms; }
+
+@keyframes hero-caret { to { visibility: hidden; } }
+
+/* Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .hero-typing::after { animation: none; }
+  .scroll-reveal section > *,
+  .scroll-reveal section .grid > * { transition: none; }
+  .scroll-reveal:not(.is-visible) section > *,
+  .scroll-reveal:not(.is-visible) section .grid > * { opacity: 1; transform: none; }
+}
+
+/* Hide scrollbar on testimonials horizontal scroll */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.testimonial-carousel {
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.testimonial-slide {
+  flex: 0 0 calc((100% - 2.5rem) / 3);
+  scroll-snap-align: start;
+}
+
+@media (max-width: 767px) {
+  .testimonial-slide { flex-basis: 85%; }
+}
+
+/* Custom selection color */
+::selection {
+  background: rgba(59, 130, 246, 0.4);
+  color: #fff;
+}
